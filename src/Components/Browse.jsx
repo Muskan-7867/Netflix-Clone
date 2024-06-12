@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Header from './Header';
-import useNowPLayingMovies from '../hooks/useNowPlayingMovies';
+import useNowPLayingMovies from '../hooks/useNowPlayingMovies.jsx';
 import Maincontainer from './Maincontainer';
 import Secondarycontainer from './Secondarycontainer';
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from "firebase/auth";
-import { auth } from '../../utills/firebaseConfig';
+import { auth } from '../../utills/firebaseConfig.jsx';
 import { onAuthStateChanged } from "firebase/auth";
 
-import { addUser, removeuser } from '../../utills/userSlice';
+import { addUser, removeuser } from '../../utills/userSlice.jsx';
 import { useDispatch } from 'react-redux';
 import { LOGO } from '../../utills/constants';
 
