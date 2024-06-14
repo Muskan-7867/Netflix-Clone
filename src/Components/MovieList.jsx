@@ -15,7 +15,7 @@ const MovieList = ({ title, movies }) => {
         <h1>{title}</h1>
         <div>
          
-          {movies[0] && <MovieCard posterPath={movies[0].poster_path} />}
+          {movies.map(movie => <MovieCard key={movie.id} posterPath={movie.poster_path} />)}
         </div>
       </div>
     </div>
