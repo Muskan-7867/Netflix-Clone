@@ -8,25 +8,35 @@ const useMovieTrailer = (movieid) => {
 
   useEffect(() => {
     const getMovieVideos = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieid}/videos?language=en-US`,
-        API_options
-      );
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${movieid}/videos?language=en-US`,
+          API_options
+        );
 
-      const json = await response.json();
-      console.log(json.results);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
 
-      const filterdata = json.results.filter(
-        (video) => video.type === "Trailer"
-      );
-      const trailer = filterdata.length ? filterdata[0] : json.results[0];
-      console.log(trailer);
-      dispatch(addTrailerVideo(trailer));
+        const json = await response.json();
+        
+        if (json.results) {
+          const filterdata = json.results.filter(
+            (video) => video.type === "Trailer"
+          );
+          const trailer = filterdata.length ? filterdata[0] : json.results[0];
+          
+          dispatch(addTrailerVideo(trailer));
+        } else {
+          console.error('No results found in the response');
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
-    {
-      getMovieVideos();
-    }
-  }, []);
+
+    getMovieVideos();
+  }, [movieid, dispatch]);
 };
 
 export default useMovieTrailer;

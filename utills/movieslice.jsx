@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const movieslice = createSlice({
+const movieSlice = createSlice({
     name: 'movies',
     initialState: {
         nowPlayingMovies: null,
@@ -16,5 +16,5 @@ const movieslice = createSlice({
     }
 });
 
-export const { addNowPlayingMovies, addTrailerVideo } = movieslice.actions;
-export default movieslice.reducer;
+export const { addNowPlayingMovies, addTrailerVideo } = movieSlice.actions;
+export default movieSlice.reducer;
