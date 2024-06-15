@@ -7,7 +7,7 @@ const MovieList = ({ title, movies }) => {
     return <div>No movies available</div>;
   }
 
-  console.log("from movie list", movies[0]);
+ 
 
   return (
     <div className="px-6">

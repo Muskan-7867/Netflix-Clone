@@ -35,7 +35,7 @@ export const Login = () => {
             console.error(error);
           });
 
-          console.log(user);
+          
         })
         .catch((error) => {
           const errorCode = error.code;
