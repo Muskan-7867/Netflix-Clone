@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from '../../utills/firebaseConfig.jsx';
+import { auth } from "../../utills/firebaseConfig.jsx";
 import { onAuthStateChanged } from "firebase/auth";
 
-import { addUser, removeuser } from '../../utills/userSlice.jsx';
-import { useDispatch } from 'react-redux';
-import { LOGO } from '../../utills/constants';
-
+import { addUser, removeuser } from "../../utills/userSlice.jsx";
+import { useDispatch } from "react-redux";
+import { LOGO } from "../../utills/constants";
+import { togglegptsearchview } from "../../utills/Gptslice.jsx";
+import { changelanguage } from "../../utills/configslice.jsx";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -30,36 +31,61 @@ export const Header = () => {
       if (user) {
         const { uid, email, photoURL, displayName } = user;
         dispatch(addUser({ uid, email, photoURL: photoURL, displayName }));
-        navigate('/browse');
+        navigate("/browse");
       } else {
         dispatch(removeuser());
-        navigate('/');
+        navigate("/");
       }
     });
   }, [dispatch, navigate]);
 
+  const handlegptserachclick = () =>{
+    dispatch(togglegptsearchview())
+  }
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        navigate('/');
-      }).catch((error) => {
-        navigate('/error');
+        navigate("/");
+      })
+      .catch((error) => {
+        navigate("/error");
       });
   };
+  const handlelanguage=(e) => {
+     dispatch(changelanguage(e.target.value))
+  
+  }
 
   return (
-    <div className='absolute w-screen px-8 py-2 bg-gradient-to-b flex justify-between from-black z-10'>
-      <img className='w-44 h-32' src={LOGO} alt="Netflix Logo" />
-      <div className='flex p-8'>
-        {user ? (
-          <>
-            <img className='h-14 w-14 rounded-full' src={user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName)}&color=fff`} alt="Profile" />
-            <button onClick={handleSignOut} className='bg-red-600 ml-4 p-4 font-bold text-white rounded-lg'>Sign Out</button>
-          </>
-        ) : (
-          <button onClick={() => navigate('/login')} className='bg-red-600 ml-4 p-4 font-bold text-white rounded-lg'>Sign In</button>
-        )}
-      </div>
+    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b flex justify-between from-black z-10">
+      <img className="w-44 h-32" src={LOGO} alt="Netflix Logo" />
+
+      {user && (
+        <div className="flex p-8">
+          <select  onChange={handlelanguage} className="rounded-lg p-4 text-white bg-gray-900">
+            <option value="en">English</option>
+            <option value="hindi">Hindi</option>
+            <option value="spanish">Spanish</option>
+          </select>
+         
+          
+           <button
+          onClick={handlegptserachclick}
+          className="bg-red-600  mr-2 ml-4 p-4 font-bold text-white rounded-lg">GPT Seatch</button>
+          <button
+            onClick={handleSignOut}
+            className="bg-red-600  mr-2 ml-4 p-4 font-bold text-white rounded-lg"
+          >
+            Sign Out
+          </button>
+
+          <img className="h-14 w-14 rounded-full" src={user.photoURL ||`https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName)}&color=red`
+             }
+            alt="Profile"
+          />
+        </div>
+      )}
     </div>
   );
 };
