@@ -13,5 +13,5 @@ const configslice = createSlice({
 
 
 })
-export const {changelanguage} = configslice.actions;
+export const { changelanguage } = configslice.actions;
 export default configslice.reducer;
