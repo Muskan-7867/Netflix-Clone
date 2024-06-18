@@ -31,7 +31,7 @@ const useMovieTrailer = (movieid) => {
           console.error('No results found in the response');
         }
       } catch (error) {
-        console.log(error);
+      
       }
     };
 
