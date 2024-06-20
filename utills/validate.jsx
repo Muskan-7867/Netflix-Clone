@@ -1,10 +1,13 @@
-export const checkValidData = (email,password) => {
-
-    const emailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(email)
-   const passwordValid =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)
-
-   if(!emailValid) return "Email ID is not valid";
-   if(!passwordValid) return "password is not valid";
-
-   return null;
-}
+export const checkValidData = (email, password) => {
+    if (!email || !password) {
+      return "Email and password are required.";
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return "Invalid email address.";
+    }
+    if (password.length < 6) {
+      return "Password must be at least 6 characters long.";
+    }
+    return null;
+  };
+  
