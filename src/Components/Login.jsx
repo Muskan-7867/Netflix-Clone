@@ -15,7 +15,7 @@ export const Login = () => {
     setisSigninform(!isSigninform);
   };
 
-  const handlesubmit = () => {
+  const handlesubmit = async () => {
     const emailValue = email.current.value;
     const passwordValue = password.current.value;
     const message = checkValidData(emailValue, passwordValue);
@@ -23,36 +23,27 @@ export const Login = () => {
     if (message) return;
 
     if (!isSigninform) {
-      createUserWithEmailAndPassword(auth, emailValue, passwordValue)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          updateProfile(auth.currentUser, {
-            displayName: name.current.value,
-            photoURL: `https://ui-avatars.com/api/?name=${encodeURIComponent(name.current.value)}&color=fff`
-          }).then(() => {
-            // Profile updated
-          }).catch((error) => {
-            console.error(error);
-          });
-
-          
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setError(errorCode + " - " + errorMessage);
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, emailValue, passwordValue);
+        const user = userCredential.user;
+        await updateProfile(auth.currentUser, {
+          displayName: name.current.value,
+          photoURL: `https://ui-avatars.com/api/?name=${encodeURIComponent(name.current.value)}&color=fff`
         });
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(errorCode + " - " + errorMessage);
+      }
     } else {
-      signInWithEmailAndPassword(auth, emailValue, passwordValue)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          // Sign-in successful
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setError(errorCode + " - " + errorMessage);
-        });
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, emailValue, passwordValue);
+        const user = userCredential.user;
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(errorCode + " - " + errorMessage);
+      }
     }
   };
 
@@ -63,7 +54,7 @@ export const Login = () => {
         <img className="h-full w-full object-cover" src='src/assets/netflix.jpg' alt="Netflix" />
       </div>
 
-      <form onSubmit={(e) => { e.preventDefault(); handlesubmit(); }} className='absolute right-0 left-0 top-1/2 bg-black bg-opacity-80 rounded-lg transform -translate-y-1/2 mx-auto p-8 sm:p-12 w-11/12 sm:w-3/12'>
+      <form onSubmit={(e) => { e.preventDefault(); handlesubmit(); }} className='absolute right-0 left-0 top-1/2 bg-black bg-opacity-80 rounded-lg transform -translate-y-1/2 mx-auto p-8 sm:p-12 w-full md:w-3/12'>
         <h1 className='text-white text-2xl sm:text-3xl font-bold mb-4 sm:mb-6'>
           {isSigninform ? "Sign-In" : "Sign-Up"}
         </h1>
