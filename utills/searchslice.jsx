@@ -1,21 +1,20 @@
- import { createSlice } from "@reduxjs/toolkit";
- const searchslice = createSlice({
-    name:'search',
-    initialState:{
-        movieName:null,
-        searchedMovie:null,
+import { createSlice } from "@reduxjs/toolkit";
+
+const searchSlice = createSlice({
+    name: 'search',
+    initialState: {
+        movieName: '',
+        searchedMovie: [],
     },
-    reducers:{
-        setSearchMovieDetails:(state,action) =>{
-            const {searchedMovies, movies} = action.payload;
-            state.movieName = searchedMovies;
-            state.searchedMovie  = movies;
+    reducers: {
+        setSearchMovieDetails: (state, action) => {
+            const { searchMovie, movies } = action.payload;
+            state.movieName = searchMovie;
+            state.searchedMovie = movies;
+          
         }
     }
-})
+});
 
-   
-
-export const {  setSearchMovieDetails,searchedMovies} = searchslice.actions;
-
-export default searchslice.reducer;
+export const { setSearchMovieDetails,searchMovie } = searchSlice.actions;
+export default searchSlice.reducer;
