@@ -15,7 +15,7 @@ export const Browse = () => {
   useUpComingMovies();
 
   return (
-    <div>
+    <div className="no-scrollbar">
       <Header />
       {showgptsearch ? (
         <Gptsearch />

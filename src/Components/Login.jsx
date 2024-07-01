@@ -7,6 +7,7 @@ import { auth } from '../../utills/firebaseConfig.jsx';
 export const Login = () => {
   const [isSigninform, setisSigninform] = useState(true);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(''); // new state variable for success message
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
@@ -30,6 +31,7 @@ export const Login = () => {
           displayName: name.current.value,
           photoURL: `https://ui-avatars.com/api/?name=${encodeURIComponent(name.current.value)}&color=fff`
         });
+        setSuccess('Account created successfully!'); // set success message
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -39,6 +41,7 @@ export const Login = () => {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, emailValue, passwordValue);
         const user = userCredential.user;
+        setSuccess('Signed in successfully!'); // set success message
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -89,9 +92,15 @@ export const Login = () => {
           {isSigninform ? "New to Netflix? Sign Up Now" : "Already have an account? Sign in Now"}
         </p>
         {error && <p className="text-red-500 mt-2">{error}</p>}
+        {success && (
+          <div className="bg-blue-900 p-4 rounded mb-4">
+            <p className="text-white">{success}</p>
+          </div>
+        )}
       </form>
-    </div>
-  );
-};
 
-export default Login;
+      </div>
+
+      )}
+
+      export default Login;

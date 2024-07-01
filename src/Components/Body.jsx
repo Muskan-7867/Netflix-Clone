@@ -2,6 +2,7 @@
 import {  createBrowserRouter, RouterProvider  } from 'react-router-dom';
 import Login from './Login';
 import Browse from './Browse';
+
 export const Body = () => {
  
  const appRouter = createBrowserRouter([
@@ -15,7 +16,7 @@ export const Body = () => {
 }
 ]);
 return (
-  <div>
+  <div >
  <RouterProvider router={appRouter} />
 
       </div>
